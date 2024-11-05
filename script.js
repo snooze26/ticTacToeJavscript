@@ -25,11 +25,13 @@ const players = (() => {
         let player1 = marker; 
         let player2;
 
-        if(player1 === "X"){
+        if(player1 === "X" || player1 === "x"){
             player2 = "O";
 
-        }else{
+        }else if( player1 === "O" || player1 === "o"){
             player2 = "X";
+        }else{
+            players.playerInputs();
         }
 
         return {player1, player2};
@@ -45,9 +47,23 @@ const players = (() => {
             }
         }; 
 
-    return {playerInputs, pickPlayer};
+    const playerChoice = () => {
+        acceptableValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        boardPosition = 0;
+
+        while (gameBoard.getBoard(board[acceptableValues])){
+            boardPosition = parseInt(prompt("Choose your next position: (1-9)"));
+
+        }
+        return boardPosition;
+
+    }
+
+    return {playerInputs, pickPlayer, playerChoice};
 })();
 
 console.log(gameBoard.getBoard());
 
 console.log(players.playerInputs());
+
+console.log(players.playerChoice);
