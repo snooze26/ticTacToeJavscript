@@ -12,7 +12,9 @@ const gameBoard = (() => {
     // const setMarker = () => {
 
     // }
-});
+
+    return { getBoard, resetBoard};
+})();
 
 const players = (() => {
     const playerInputs = () => {
@@ -31,13 +33,21 @@ const players = (() => {
         }
 
         return {player1, player2};
-    }
+    };
 
-    const pickPlayer = (()) => {
+    const pickPlayer = () => {
+            let playerOrder = Math.floor(Math.random() * 2);
 
-    }
-});
+            if(playerOrder === 0){
+                return "Player 1";
+            }else{
+                return "Player 2";
+            }
+        }; 
 
-console.log(gameBoard.board);
+    return {playerInputs, pickPlayer};
+})();
 
-players.playerInputs();
+console.log(gameBoard.getBoard());
+
+console.log(players.playerInputs());
