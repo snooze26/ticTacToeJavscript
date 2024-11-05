@@ -21,15 +21,23 @@ const players = (() => {
         let marker = prompt("Player 1, choose X or O");
 
         let player1 = marker; 
+        let player2;
+
         if(player1 === "X"){
-            let player2 = "O";
+            player2 = "O";
 
         }else{
-            let player2 = "X";
+            player2 = "X";
         }
 
-        return (player1, player2);
+        return {player1, player2};
+    }
+
+    const pickPlayer = (()) => {
+
     }
 });
 
 console.log(gameBoard.board);
+
+players.playerInputs();
