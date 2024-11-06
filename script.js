@@ -26,12 +26,16 @@ const players = (() => {
         let player2;
 
         if(player1 === "X" || player1 === "x"){
+            player1 = "X";
             player2 = "O";
 
         }else if( player1 === "O" || player1 === "o"){
+            player1 = "O";
             player2 = "X";
+
         }else{
             players.playerInputs();
+
         }
 
         return {player1, player2};
@@ -39,21 +43,30 @@ const players = (() => {
 
     const pickPlayer = () => {
             let playerOrder = Math.floor(Math.random() * 2);
+            console.log(playerOrder);
 
             if(playerOrder === 0){
                 return "Player 1";
             }else{
                 return "Player 2";
             }
+            
         }; 
 
-    const playerChoice = () => {
-        acceptableValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        boardPosition = 0;
-
-        while (gameBoard.getBoard(board[acceptableValues])){
+    const playerChoice = (marker) => {
+        const acceptableValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        let boardPosition = 0;
+        const board = gameBoard.getBoard();
+ 
+        while(true) {
             boardPosition = parseInt(prompt("Choose your next position: (1-9)"));
 
+            if(acceptableValues.includes(boardPosition) && board[boardPosition - 1] === ""){
+                board[boardPosition - 1] = marker;
+                break;
+            }else {
+                console.log("Invalid choice or position already taken. Please choose a new position between 1-9");
+            }
         }
         return boardPosition;
 
@@ -64,6 +77,9 @@ const players = (() => {
 
 console.log(gameBoard.getBoard());
 
+console.log(players.pickPlayer());
+
+
 console.log(players.playerInputs());
 
-console.log(players.playerChoice);
+console.log(players.playerChoice());
