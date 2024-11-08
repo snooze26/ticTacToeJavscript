@@ -9,11 +9,28 @@ const gameBoard = (() => {
         }
     };
 
-    // const setMarker = () => {
+    const checkEmptySpace = (position) => {
+        return board[position] === "";
+    };
 
-    // }
+    const boardPosition = (marker, position) => {
+        if(checkEmptySpace(position)){ 
+            board[position] = marker; 
+        }else{
+            console.log("Position already occupied!");
+        }
+    };
+    
+    const fullBoardCheck = () => {
+        for(let i = 0; i < board.length; i++){
+            if(board[i] === ""){
+                return false;
+            }
+        } 
+        return true; 
+    };
 
-    return { getBoard, resetBoard};
+    return { getBoard, resetBoard, checkEmptySpace, boardPosition, fullBoardCheck };
 })();
 
 const players = (() => {
@@ -75,11 +92,18 @@ const players = (() => {
     return {playerInputs, pickPlayer, playerChoice};
 })();
 
+
+
+
+
+
+
 console.log(gameBoard.getBoard());
 
 console.log(players.pickPlayer());
 
-
 console.log(players.playerInputs());
 
 console.log(players.playerChoice());
+
+console.log(gameBoard.fullBoardCheck());
