@@ -30,7 +30,25 @@ const gameBoard = (() => {
         return true; 
     };
 
-    return { getBoard, resetBoard, checkEmptySpace, boardPosition, fullBoardCheck };
+    const declareWinner = (marker) => {
+
+        return (
+            //row checks
+            (board[0] === marker && board[1] === marker && board[2] === marker) ||
+            (board[3] === marker && board[4] === marker && board[5] === marker) ||
+            (board[6] === marker && board[7] === marker && board[8] === marker) ||
+            //column checks
+            (board[0] === marker && board[3] === marker && board[6] === marker) ||
+            (board[1] === marker && board[4] === marker && board[7] === marker) ||
+            (board[2] === marker && board[5] === marker && board[8] === marker) ||
+            //cross checks
+            (board[0] === marker && board[4] === marker && board[8] === marker) ||
+            (board[2] === marker && board[4] === marker && board[6] === marker)
+            );
+        
+    };
+
+    return { getBoard, resetBoard, checkEmptySpace, boardPosition, fullBoardCheck, declareWinner };
 })();
 
 const players = (() => {
@@ -98,6 +116,8 @@ const players = (() => {
 
 
 
+
+
 console.log(gameBoard.getBoard());
 
 console.log(players.pickPlayer());
@@ -107,3 +127,5 @@ console.log(players.playerInputs());
 console.log(players.playerChoice());
 
 console.log(gameBoard.fullBoardCheck());
+
+console.log()
