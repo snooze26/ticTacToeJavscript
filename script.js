@@ -48,7 +48,7 @@ const gameBoard = (() => {
     
     };
 
-    const replayGame = (( ) => {
+    const resetGame = (( ) => {
         let replayChoice; 
         const yesOrNo = ["Y", "y", "N", "n"];
 
@@ -67,7 +67,7 @@ const gameBoard = (() => {
         };    
     });
 
-    return { boardPosition, checkEmptySpace, declareWinner, fullBoardCheck, getBoard, replayGame, resetBoard };
+    return { boardPosition, checkEmptySpace, declareWinner, fullBoardCheck, getBoard, resetGame, resetBoard };
 })();
 
 const players = (() => {
@@ -130,8 +130,11 @@ const players = (() => {
 })();
 
 
+const manipulateDOM = (() => {
+        const showBoard = (() => {
 
-
+        });
+}
 
 
 
