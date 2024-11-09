@@ -132,9 +132,20 @@ const players = (() => {
 
 const manipulateDOM = (() => {
         const showBoard = (() => {
+            
+            const gameBoard = document.querySelector("#gameBoard");
+            const markerCell = document.createElement("td");
+            const newRow = document.createElement("tr");
+
+            
+
+
 
         });
-}
+
+    return { showBoard};
+    
+})();
 
 
 
@@ -148,4 +159,4 @@ const manipulateDOM = (() => {
 
 // console.log(gameBoard.fullBoardCheck());
 
-console.log(gameBoard.replayGame());
+console.log(gameBoard.resetGame());
