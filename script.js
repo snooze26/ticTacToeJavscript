@@ -45,10 +45,29 @@ const gameBoard = (() => {
             (board[0] === marker && board[4] === marker && board[8] === marker) ||
             (board[2] === marker && board[4] === marker && board[6] === marker)
             );
-        
+    
     };
 
-    return { getBoard, resetBoard, checkEmptySpace, boardPosition, fullBoardCheck, declareWinner };
+    const replayGame = (( ) => {
+        let replayChoice; 
+        const yesOrNo = ["Y", "y", "N", "n"];
+
+        while(!yesOrNo.includes(replayChoice)){
+            replayChoice = prompt("Do you want to keep playing? Y or N");
+            
+            if(!yesOrNo.includes(replayChoice)){
+                replayChoice = alert("Sorry, please chose Y or N");
+            };
+        };
+
+        if((replayChoice == "Y") || (replayChoice == "y") ){
+            return true;
+        }else{
+            return false;
+        };    
+    });
+
+    return { boardPosition, checkEmptySpace, declareWinner, fullBoardCheck, getBoard, replayGame, resetBoard };
 })();
 
 const players = (() => {
@@ -116,16 +135,14 @@ const players = (() => {
 
 
 
+// console.log(gameBoard.getBoard());
 
+// console.log(players.pickPlayer());
 
-console.log(gameBoard.getBoard());
+// console.log(players.playerInputs());
 
-console.log(players.pickPlayer());
+// console.log(players.playerChoice());
 
-console.log(players.playerInputs());
+// console.log(gameBoard.fullBoardCheck());
 
-console.log(players.playerChoice());
-
-console.log(gameBoard.fullBoardCheck());
-
-console.log()
+console.log(gameBoard.replayGame());
