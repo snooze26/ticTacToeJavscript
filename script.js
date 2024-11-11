@@ -2,7 +2,7 @@
 const gameBoard = document.querySelector("#gameBoard");
 
 const gameBoardFn = (() => {
-    const board = ["", "", "", "", "", "", "", "", ""];
+    const board = ["X", "X", "X", "X", "X", "X", "X", "X", "X"];
 
     const getBoard = () => board; 
 
@@ -134,7 +134,7 @@ const playersFn = (() => {
 
 
 const manipulateDOM = (() => {
-        const showBoard = (() => {
+        const showBoard = () => {
 
             const boardArray = gameBoardFn.getBoard();
             gameBoardTable = document.querySelector("#gameBoard");
@@ -158,14 +158,26 @@ const manipulateDOM = (() => {
                             gameBoardFn.boardPosition("X", j);
                             showBoard();
                         }
-                    })
+                    });
                     row.appendChild(cell);
                 };
             gameBoardTable.appendChild(row);
             }
+        };
+
+
+        const playerChoiceDOM = () => {
+                
+        };
+
+        //reset board 
+        document.querySelector("#resetBtn").addEventListener("click", () => {
+            gameBoardFn.resetBoard();
+            manipulateDOM.showBoard();
         });
 
-    return { showBoard};
+
+    return { showBoard };
     
 })();
 
