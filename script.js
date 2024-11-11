@@ -1,4 +1,7 @@
-const gameBoard = (() => {
+//gameBoard DOM element
+const gameBoard = document.querySelector("#gameBoard");
+
+const gameBoardFn = (() => {
     const board = ["", "", "", "", "", "", "", "", ""];
 
     const getBoard = () => board; 
@@ -70,7 +73,7 @@ const gameBoard = (() => {
     return { boardPosition, checkEmptySpace, declareWinner, fullBoardCheck, getBoard, resetGame, resetBoard };
 })();
 
-const players = (() => {
+const playersFn = (() => {
     const playerInputs = () => {
         const acceptableMarkers = ["X", "O"];
 
@@ -132,31 +135,52 @@ const players = (() => {
 
 const manipulateDOM = (() => {
         const showBoard = (() => {
+
+            const boardArray = gameBoardFn.getBoard();
+            gameBoardTable = document.querySelector("#gameBoard");
+
+            gameBoardTable.innerHTML = "";
             
-            const gameBoard = document.querySelector("#gameBoard");
-            const markerCell = document.createElement("td");
-            const newRow = document.createElement("tr");
+            //row creation
+            for(let i = 0; i < boardArray.length; i += 3){
+                const row = document.createElement("tr");
+                
+                //cell creation
+                for (let j = i; j < i +3; j++){
+                    const cell = document.createElement("td");
 
-            
+                    //add X or O or leave Empty 
+                    cell.textContent = boardArray[j] || "";
+                    cell.classList.add("board-cell");
 
-
-
+                    cell.addEventListener("click", () => {
+                        if(gameBoardFn.checkEmptySpace(j)){
+                            gameBoardFn.boardPosition("X", j);
+                            showBoard();
+                        }
+                    })
+                    row.appendChild(cell);
+                };
+            gameBoardTable.appendChild(row);
+            }
         });
 
     return { showBoard};
     
 })();
 
+manipulateDOM.showBoard();
 
 
-// console.log(gameBoard.getBoard());
 
-// console.log(players.pickPlayer());
+// console.log(gameBoardFn.getBoard());
 
-// console.log(players.playerInputs());
+// console.log(playersFn.pickPlayer());
 
-// console.log(players.playerChoice());
+// console.log(playersFn.playerInputs());
 
-// console.log(gameBoard.fullBoardCheck());
+// console.log(playersFn.playerChoice());
 
-console.log(gameBoard.resetGame());
+// console.log(gameBoardFn.fullBoardCheck());
+
+// console.log(gameBoardFn.resetGame());
