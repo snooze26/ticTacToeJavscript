@@ -1,0 +1,14 @@
+#gameBoard {
+    border-collapse: collapse;
+    width: 300px;
+    height: 300px;
+}
+
+.board-cell {
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-size: 24px;
+    cursor: pointer;
+}
