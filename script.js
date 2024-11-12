@@ -2,7 +2,7 @@
 const gameBoard = document.querySelector("#gameBoard");
 
 const gameBoardFn = (() => {
-    const board = ["X", "X", "X", "X", "X", "X", "X", "X", "X"];
+    const board = ["", "", "", "", "", "", "", "", ""];
 
     const getBoard = () => board; 
 
