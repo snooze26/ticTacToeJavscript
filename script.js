@@ -180,7 +180,7 @@ const manipulateDOM = (() => {
 
                             showBoard();
                         }else{
-                            console.log("Position already taken!");
+                            alert("Position already taken!");
                         };
                     });
                     row.appendChild(cell);
