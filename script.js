@@ -74,62 +74,71 @@ const gameBoardFn = (() => {
 })();
 
 const playersFn = (() => {
-    const playerInputs = () => {
-        const acceptableMarkers = ["X", "O"];
 
-        let marker = prompt("Player 1, choose X or O");
+    let currentPlayer = "X";
 
-        let player1 = marker; 
-        let player2;
-
-        if(player1 === "X" || player1 === "x"){
-            player1 = "X";
-            player2 = "O";
-
-        }else if( player1 === "O" || player1 === "o"){
-            player1 = "O";
-            player2 = "X";
-
-        }else{
-            players.playerInputs();
-
-        }
-
-        return {player1, player2};
+    const togglePlayer = () => {
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
     };
 
-    const pickPlayer = () => {
-            let playerOrder = Math.floor(Math.random() * 2);
-            console.log(playerOrder);
+    const getCurrentPlayer = () => currentPlayer; 
+    // const playerInputs = () => {
+    //     const acceptableMarkers = ["X", "O"];
 
-            if(playerOrder === 0){
-                return "Player 1";
-            }else{
-                return "Player 2";
-            }
+    //     let marker = prompt("Player 1, choose X or O");
+
+    //     let player1 = marker; 
+    //     let player2;
+
+    //     if(player1 === "X" || player1 === "x"){
+    //         player1 = "X";
+    //         player2 = "O";
+
+    //     }else if( player1 === "O" || player1 === "o"){
+    //         player1 = "O";
+    //         player2 = "X";
+
+    //     }else{
+    //         players.playerInputs();
+
+    //     }
+
+    //     return {player1, player2};
+    // };
+
+    // const pickPlayer = () => {
+    //         let playerOrder = Math.floor(Math.random() * 2);
+    //         console.log(playerOrder);
+
+    //         if(playerOrder === 0){
+    //             return "Player 1";
+    //         }else{
+    //             return "Player 2";
+    //         }
             
-        }; 
+    //     }; 
 
-    const playerChoice = (marker) => {
-        const acceptableValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        let boardPosition = 0;
-        const board = gameBoard.getBoard();
+    // const playerChoice = (marker) => {
+    //     const acceptableValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    //     let boardPosition = 0;
+    //     const board = gameBoard.getBoard();
  
-        while(true) {
-            boardPosition = parseInt(prompt("Choose your next position: (1-9)"));
+    //     while(true) {
+    //         boardPosition = parseInt(prompt("Choose your next position: (1-9)"));
 
-            if(acceptableValues.includes(boardPosition) && board[boardPosition - 1] === ""){
-                board[boardPosition - 1] = marker;
-                break;
-            }else {
-                console.log("Invalid choice or position already taken. Please choose a new position between 1-9");
-            }
-        }
-        return boardPosition;
+    //         if(acceptableValues.includes(boardPosition) && board[boardPosition - 1] === ""){
+    //             board[boardPosition - 1] = marker;
+    //             break;
+    //         }else {
+    //             console.log("Invalid choice or position already taken. Please choose a new position between 1-9");
+    //         }
+    //     }
+    //     return boardPosition;
 
-    }
+    // }
 
-    return {playerInputs, pickPlayer, playerChoice};
+    // return {playerInputs, pickPlayer, playerChoice};
+    return { togglePlayer, getCurrentPlayer}; 
 })();
 
 
@@ -155,9 +164,24 @@ const manipulateDOM = (() => {
 
                     cell.addEventListener("click", () => {
                         if(gameBoardFn.checkEmptySpace(j)){
-                            gameBoardFn.boardPosition("X", j);
+                            const currentPlayer = playersFn.getCurrentPlayer();
+                            gameBoardFn.boardPosition(currentPlayer, j);
+                            
+                            //check for winner/reset board
+                            if(gameBoardFn.declareWinner(currentPlayer)) {
+                                alert(`${currentPlayer} win!`);
+                                gameBoardFn.resetBoard();
+                            }else if(gameBoardFn.getBoard().every(cell => cell !== "")){
+                                alert("it's a tie!");
+                                gameBoardFn.resetBoard();
+                            }else{
+                                playersFn.togglePlayer();
+                            }
+
                             showBoard();
-                        }
+                        }else{
+                            console.log("Position already taken!");
+                        };
                     });
                     row.appendChild(cell);
                 };
@@ -182,6 +206,7 @@ const manipulateDOM = (() => {
 })();
 
 manipulateDOM.showBoard();
+console.log(playersFn.getCurrentPlayer());
 
 
 
