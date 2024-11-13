@@ -2,10 +2,12 @@
     border-collapse: collapse;
     width: 300px;
     height: 300px;
+    border: 2px groove rgb(70, 173, 70);
+    background: #a2f292;
 }
 
 .board-cell {
-    border: 1px solid black;
+    border: 1px solid white;
     width: 100px;
     height: 100px;
     text-align: center;
