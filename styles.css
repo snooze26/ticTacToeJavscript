@@ -2,6 +2,15 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#gameContainer{
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 #gameBoard {
@@ -29,5 +38,11 @@ body{
     box-sizing: border-box;
     width: 75px;
     height: 50px;
+    margin-top: 20px;
 }
+
+#name1, #name2{
+    width: 150px;
+}
+
 
