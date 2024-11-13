@@ -1,3 +1,9 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #gameBoard {
     border-collapse: collapse;
     width: 300px;
@@ -14,3 +20,14 @@
     font-size: 24px;
     cursor: pointer;
 }
+
+.board-cell:hover{
+    background: #c4ffb8;
+}
+
+#resetBtn{
+    box-sizing: border-box;
+    width: 75px;
+    height: 50px;
+}
+
