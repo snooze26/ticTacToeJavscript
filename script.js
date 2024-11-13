@@ -78,6 +78,7 @@ const playersFn = (() => {
 
     const togglePlayer = () => {
         currentPlayer = currentPlayer === "X" ? "O" : "X";
+
     };
 
     const getCurrentPlayer = () => currentPlayer; 
@@ -90,7 +91,7 @@ const manipulateDOM = (() => {
         const boardLogic = () => {
 
             const boardArray = gameBoardFn.getBoard();
-            gameBoardTable = document.querySelector("#gameBoard");
+            let gameBoardTable = document.querySelector("#gameBoard");
 
             gameBoardTable.innerHTML = "";
             
@@ -106,9 +107,17 @@ const manipulateDOM = (() => {
                     cell.textContent = boardArray[j] || "";
                     cell.classList.add("board-cell");
 
+                    if(boardArray[j] === "X"){
+                        cell.style.color = "blue";
+                    }else if(boardArray[j] === "O"){
+                        cell.style.color = "red";
+                    };
+
                     cell.addEventListener("click", () => {
                         if(gameBoardFn.checkEmptySpace(j)){
                             const currentPlayer = playersFn.getCurrentPlayer();
+
+
                             gameBoardFn.boardPosition(currentPlayer, j);
                             
                             //check for winner/reset board
