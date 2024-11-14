@@ -73,87 +73,109 @@ const gameBoardFn = (() => {
 })();
 
 const playersFn = (() => {
-
     let currentPlayer = "X";
+    let playerNames = { X: "Player 1", O: "Player 2" };
+
+    const setPlayerNames = () => {
+        const name1Input = document.querySelector("#name1");
+        const name2Input = document.querySelector("#name2");
+
+        playerNames.X = name1Input.value || "Player 1";
+        playerNames.O = name2Input.value || "Player 2";
+
+        document.querySelector("#player1Display").textContent = playerNames.X;
+        document.querySelector("#player2Display").textContent = playerNames.O;
+    };
+
+    const initNameInputs = () => {
+        document.querySelector("#name1").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                setPlayerNames();
+                e.target.blur(); // Remove focus after pressing Enter
+            }
+        });
+
+        document.querySelector("#name2").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") {
+                setPlayerNames();
+                e.target.blur(); // Remove focus after pressing Enter
+            }
+        });
+    };
 
     const togglePlayer = () => {
         currentPlayer = currentPlayer === "X" ? "O" : "X";
-
     };
 
-    const getCurrentPlayer = () => currentPlayer; 
+    const getCurrentPlayer = () => currentPlayer;
+    const getCurrentPlayerName = () => playerNames[currentPlayer];
 
-    return { togglePlayer, getCurrentPlayer}; 
+    return { togglePlayer, getCurrentPlayer, setPlayerNames, getCurrentPlayerName, initNameInputs };
 })();
-
 
 const manipulateDOM = (() => {
-        const boardLogic = () => {
+    const boardLogic = () => {
+        const boardArray = gameBoardFn.getBoard();
+        const gameBoardTable = document.querySelector("#gameBoard");
 
-            const boardArray = gameBoardFn.getBoard();
-            let gameBoardTable = document.querySelector("#gameBoard");
+        gameBoardTable.innerHTML = "";
 
-            gameBoardTable.innerHTML = "";
-            
-            //row creation
-            for(let i = 0; i < boardArray.length; i += 3){
-                const row = document.createElement("tr");
-                
-                //cell creation
-                for (let j = i; j < i +3; j++){
-                    const cell = document.createElement("td");
+        // Row creation
+        for (let i = 0; i < boardArray.length; i += 3) {
+            const row = document.createElement("tr");
 
-                    //add X or O or leave Empty 
-                    cell.textContent = boardArray[j] || "";
-                    cell.classList.add("board-cell");
+            // Cell creation
+            for (let j = i; j < i + 3; j++) {
+                const cell = document.createElement("td");
 
-                    if(boardArray[j] === "X"){
-                        cell.style.color = "blue";
-                    }else if(boardArray[j] === "O"){
-                        cell.style.color = "red";
-                    };
+                cell.textContent = boardArray[j] || "";
+                cell.classList.add("board-cell");
 
-                    cell.addEventListener("click", () => {
-                        if(gameBoardFn.checkEmptySpace(j)){
-                            const currentPlayer = playersFn.getCurrentPlayer();
+                if (boardArray[j] === "X") {
+                    cell.style.color = "blue";
+                } else if (boardArray[j] === "O") {
+                    cell.style.color = "red";
+                }
 
+                cell.addEventListener("click", () => {
+                    if (gameBoardFn.checkEmptySpace(j)) {
+                        const currentPlayer = playersFn.getCurrentPlayer();
+                        const currentPlayerName = playersFn.getCurrentPlayerName();
 
-                            gameBoardFn.boardPosition(currentPlayer, j);
-                            
-                            //check for winner/reset board
-                            if(gameBoardFn.declareWinner(currentPlayer)) {
-                                alert(`${currentPlayer} win!`);
-                                gameBoardFn.resetBoard();
-                            }else if(gameBoardFn.getBoard().every(cell => cell !== "")){
-                                alert("it's a tie!");
-                                gameBoardFn.resetBoard();
-                            }else{
-                                playersFn.togglePlayer();
-                            }
+                        gameBoardFn.boardPosition(currentPlayer, j);
 
-                            boardLogic();
-                        }else{
-                            alert("Position already taken!");
-                        };
-                    });
-                    row.appendChild(cell);
-                };
-            gameBoardTable.appendChild(row);
+                        if (gameBoardFn.declareWinner(currentPlayer)) {
+                            alert(`${currentPlayerName} wins!`);
+                            gameBoardFn.resetBoard();
+                        } else if (gameBoardFn.getBoard().every(cell => cell !== "")) {
+                            alert("It's a tie!");
+                            gameBoardFn.resetBoard();
+                        } else {
+                            playersFn.togglePlayer();
+                        }
+
+                        boardLogic();
+                    } else {
+                        alert("Position already taken!");
+                    }
+                });
+
+                row.appendChild(cell);
             }
-        };
+            gameBoardTable.appendChild(row);
+        }
+    };
 
-
-
-        //reset board 
-        document.querySelector("#resetBtn").addEventListener("click", () => {
-            gameBoardFn.resetBoard();
-            manipulateDOM.boardLogic();
-        });
-
+    // Reset board
+    document.querySelector("#resetBtn").addEventListener("click", () => {
+        gameBoardFn.resetBoard();
+        manipulateDOM.boardLogic();
+        playersFn.setPlayerNames();  // Reset player names on reset
+    });
 
     return { boardLogic };
-    
 })();
 
+// Initialize game
 manipulateDOM.boardLogic();
-
+playersFn.initNameInputs();

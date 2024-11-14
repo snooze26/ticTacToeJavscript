@@ -41,8 +41,10 @@ body{
     margin-top: 20px;
 }
 
-#name1, #name2{
-    width: 150px;
+#player1Container, #player2Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
